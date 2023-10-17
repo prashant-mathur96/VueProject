@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-
 import DefaultLayout from '@/layouts/DefaultLayout'
-
+import users from '@/views/users/users.vue'
 const routes = [
   {
     path: '/',
@@ -17,7 +16,7 @@ const routes = [
       {
         path: '/users/users',
         name: 'Users',
-        component: () => import('@/views/users/users.vue'),
+        component: () => users,
       },
       {
         path: '/users/add-user',
@@ -34,7 +33,6 @@ const router = createRouter({
   scrollBehavior() {
     // always scroll to top
     return { top: 0 }
-  },
+  }
 })
-
 export default router

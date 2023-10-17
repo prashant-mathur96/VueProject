@@ -1,6 +1,6 @@
 export const logoNegative = [
-  '556 134',
-  `
+	"556 134",
+	`
   <title>coreui vue logo</title>
   <g>
     <g style="fill:#1bbd93">

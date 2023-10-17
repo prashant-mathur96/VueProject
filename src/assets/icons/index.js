@@ -167,5 +167,4 @@ export const iconsSet = Object.assign(
     cibCcPaypal,
     cibCcApplePay,
     cibCcAmex,
-  },
-)
+  })

@@ -62,9 +62,7 @@ const AppSidebarNav = defineComponent({
         return h(
           CNavGroup,
           {
-            ...(firstRender.value && {
-              visible: item.items.some((child) => isActiveItem(route, child)),
-            }),
+            ...(firstRender.value && { visible: item.items.some((child) => isActiveItem(route, child))})
           },
           {
             togglerContent: () => [
