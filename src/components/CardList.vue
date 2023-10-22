@@ -4,14 +4,16 @@
       <span class="user_avatar">
         <CAvatar :src="avatar" size="lg" />
       </span>
-      <div class="user_info">
+      <div class="user_info position-relative">
         <h3 class="user_title">{{ data.name }}</h3>
         <p class="user_email">{{ data.email }}</p>
-        <p class="user_dob">{{ data.phone }}</p>
-        <p class="user_ctry">{{ data.website }}</p>
-        <p class="user_ctry">{{ data.company.name }}</p>
+        <p class="user_dob">{{ data.dob }}</p>
+        <p class="user_ctry">{{ data.country }}</p>
+        <router-link class="edit_btn" color="primary" :to="{name: 'update-user',params:{id: data._id}}">
+          Edit
+        </router-link>
       </div>
-    </div>
+    </div> 
   </li>
 </template>
 
@@ -23,5 +25,9 @@ export default {
     return { avatar }
   },
   props: ['data'],
+  setup(data) {
+
+    console.log(data)
+  }
 }
 </script>

@@ -23,6 +23,11 @@ const routes = [
         name: 'add-user',
         component: () => import('@/views/users/add-user.vue'),
       },
+      {
+        path: '/users/update-user/:id',
+        name: 'update-user',
+        component: () => import('@/views/users/UpdateUser.vue'),
+      },
     ],
   },
 ]

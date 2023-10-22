@@ -12,7 +12,7 @@
             <ul class="user_list">
               <CardList
                 v-for="item in items"
-                :key="item.id"
+                :key="item._id"
                 :data="{ ...item }"
               ></CardList>
             </ul>
@@ -43,7 +43,7 @@ export default {
     // userServiceObj.getUser()
     userServiceObj.getUser().then((result) => {
       console.log(result)
-      this.items = result
+      this.items = result.docs
     })
     // const items = mockClientItems(10)
   },

@@ -1,14 +1,14 @@
 <template>
-  <div class="bg-light d-flex flex-row align-items-center">
+    <div class="bg-light d-flex flex-row align-items-center">
     <div class="body flex-grow-1">
       <CContainer class="pl-0 pr-0">
         <CRow class="justify-content-center">
           <CCol>
             <CCard>
               <CCardBody class="p-4">
-                <CForm id="registerForm" @submit="Register" novalidate>
+                <CForm id="updateForm" @submit="UpdateForm" novalidate>
                   <div class="formHeading">
-                    <h1>Add User</h1>
+                    <h1>Update User</h1>
                     <p class="text-medium-emphasis">Create your account</p>
                   </div>
                   <CRow class="g-3">
@@ -43,7 +43,7 @@
                   <CRow>
                     <CCol xs>
                       <CInputGroup class="mb-2">
-                        <Datepicker format="yyyy/MM/dd"   type="date"  v-model="formData.dob" id="dob" floatingLabel="Enter Your DOB" placeholder="Enter Your DOB"/>
+                        <Datepicker v-model="formData.dob" id="dob"  format="yyyy/MM/dd" type="date" floatingLabel="Enter Your DOB" placeholder="Enter Your DOB"/>
                       </CInputGroup>
                       <p class="error_msg">
                         {{ errors.dob }}
@@ -89,14 +89,14 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import Datepicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { CFormInput } from '@coreui/vue'
 import userService from '../../service/userService'
 import Avatarinput from './Avatarinput.vue'
 import { createToaster } from "@meforma/vue-toaster";
-const date = ref();
+
 const userServiceObj = new userService()
 const toaster = createToaster({ 
   position: "top-right",
@@ -104,8 +104,8 @@ const toaster = createToaster({
 
 export default {
   components: { Datepicker, CFormInput, Avatarinput },
-  name: 'AddUser',
-  el: '#registerForm',
+  name: 'UpdateUser',
+  el: '#updateForm',
   data() {
     return {
       formData: {
@@ -114,12 +114,24 @@ export default {
         email: null,
         country: null,
       },
+      id: this.$route.params.id,
       errors: [],
       emailRegx: /^\w+([.-]?\w+)@\w+([.-]?\w+)(\.\w{2,3})+$/i,
     }
   },
+  mounted() {
+    userServiceObj.getUserById(this.id).then((result) => {
+        this.formData.name = result.name;
+        this.formData.dob = result.dob;
+        this.formData.email = result.email;
+        this.formData.country = result.country;
+        this.formData.image = result.image;
+        console.log(result);
+    })
+    console.log(this.id);
+  },
   methods: {
-    Register: function (e) {
+    UpdateForm: function (e) {
       e.preventDefault()
       this.errors = {}
       console.log(this)
@@ -145,9 +157,10 @@ export default {
         fd.append('email', this.formData.email);
         fd.append('dob', this.formData.dob);
         fd.append('country', this.formData.country);
-        userServiceObj.createUser(fd).then((result) => {
+        userServiceObj.updateUser(fd , this.id).then((result) => {
+            console.log(result);
           if (result.sucess == true) {
-            toaster.success(`User Successfully Created`);
+            toaster.success(`User Successfully Updated`);
           }else{
             toaster.error(result.msg);
           }
@@ -161,12 +174,17 @@ export default {
       this.formData.image = value;
     }
   },
-  onMounted() {
-    date.format="yyyy/MM/dd"
-    date.value = new Date().getDate();
-    // return {
-    //   date,
-    // }
+  setup() {
+    const date = ref()
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }
+    return {
+      date,
+      options,
+    }
   },
 }
 </script>
