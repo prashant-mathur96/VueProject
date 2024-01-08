@@ -40,6 +40,7 @@ export default class userService {
     })
     return response
   }
+
   updateUser(formData, id) {
     console.log(formData)
     const updateRes = axios({
@@ -60,5 +61,9 @@ export default class userService {
     })
     return updateRes
   }
+
+    
+
+
 }
 </script>

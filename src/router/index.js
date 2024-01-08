@@ -29,7 +29,8 @@ const routes = [
         component: () => import('@/views/users/UpdateUser.vue'),
       },
     ],
-  },
+    
+  }
 ]
 
 const router = createRouter({
@@ -40,4 +41,7 @@ const router = createRouter({
     return { top: 0 }
   }
 })
+
 export default router
+
+

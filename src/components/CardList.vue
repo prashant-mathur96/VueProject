@@ -12,6 +12,7 @@
         <router-link class="edit_btn" color="primary" :to="{name: 'update-user',params:{id: data._id}}">
           Edit
         </router-link>
+        <button class="delete_btn">Delete</button>
       </div>
     </div> 
   </li>
@@ -28,6 +29,6 @@ export default {
   setup(data) {
 
     console.log(data)
-  }
+  },
 }
 </script>
