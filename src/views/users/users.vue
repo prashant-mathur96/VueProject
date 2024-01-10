@@ -29,6 +29,8 @@ import { CRow } from '@coreui/vue'
 import avatar from '@/assets/images/avatars/8.jpg'
 import userService from '../../service/userService'
 // import { Header, Item } from 'vue3-easy-data-table';
+import io from 'socket.io-client';
+
 const userServiceObj = new userService()
 export default {
   name: 'users',
@@ -37,13 +39,19 @@ export default {
       items: [],
       avatar: avatar,
       CardList,
+      socket: io()
     }
   },
+   
   mounted() {
     // userServiceObj.getUser()
     userServiceObj.getUser().then((result) => {
       console.log(result)
       this.items = result.docs
+    })
+    this.socket.emit('userAdded', {name:"wer"})
+    this.socket.on('userAdded',  function(data) {
+      console.log('userAdded',data)
     })
     // const items = mockClientItems(10)
   },

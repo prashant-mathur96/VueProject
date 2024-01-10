@@ -9,8 +9,15 @@ import { iconsSet as icons } from '@/assets/icons'
 
 import Vue3EasyDataTable from 'vue3-easy-data-table'
 import 'vue3-easy-data-table/dist/style.css'
+import VueSocketIO from 'vue-socket.io'
+import SocketIO from "socket.io-client"
 
 const app = createApp(App)
+
+app.use(router, new VueSocketIO({
+    debug: true,
+    connection: SocketIO('http://localhost:8000'), 
+    }));
 app.use(store)
 app.use(router)
 app.use(CoreuiVue)
