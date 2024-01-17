@@ -14,12 +14,11 @@ import SocketIO from "socket.io-client"
 
 const app = createApp(App)
 
+app.use(store)
 app.use(router, new VueSocketIO({
     debug: true,
-    connection: SocketIO('http://localhost:8000'), 
-    }));
-app.use(store)
-app.use(router)
+    connection: SocketIO('http://44.208.151.82:3000'), 
+}));
 app.use(CoreuiVue)
 app.provide('icons', icons)
 app.component('CIcon', CIcon)

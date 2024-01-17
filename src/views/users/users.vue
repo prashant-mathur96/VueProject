@@ -42,17 +42,19 @@ export default {
       socket: io()
     }
   },
-   
+  created () {
+    this.socket.on('userAdded',  function(data) {
+      console.log('userAdded',data)
+      alert("Hello")
+    })
+  },
   mounted() {
     // userServiceObj.getUser()
     userServiceObj.getUser().then((result) => {
       console.log(result)
       this.items = result.docs
     })
-    this.socket.emit('userAdded', {name:"wer"})
-    this.socket.on('userAdded',  function(data) {
-      console.log('userAdded',data)
-    })
+    
     // const items = mockClientItems(10)
   },
   components: {
