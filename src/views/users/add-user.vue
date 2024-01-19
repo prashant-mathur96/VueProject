@@ -96,6 +96,7 @@ import { CFormInput } from '@coreui/vue'
 import userService from '../../service/userService'
 import Avatarinput from './Avatarinput.vue'
 import { createToaster } from "@meforma/vue-toaster";
+import { socket } from "@/components/socket"
 const date = ref();
 const userServiceObj = new userService()
 const toaster = createToaster({ 
@@ -137,7 +138,6 @@ export default {
       if (!this.formData.country) {
         this.errors.country = 'Please Select Country'
       }
-      console.log(this.formData)
       if (Object.keys(this.errors).length === 0) {
         let fd = new FormData();
         fd.append('image', this.formData.image);
@@ -147,7 +147,10 @@ export default {
         fd.append('country', this.formData.country);
         userServiceObj.createUser(fd).then((result) => {
           if (result.sucess == true) {
-            toaster.success(`User Successfully Created`);
+            socket.emit("userAddedSuccess", result  , () => {
+              toaster.success(`User Successfully Created`);
+            });
+            
           }else{
             toaster.error(result.msg);
           }

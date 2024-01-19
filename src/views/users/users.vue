@@ -29,7 +29,7 @@ import { CRow } from '@coreui/vue'
 import avatar from '@/assets/images/avatars/8.jpg'
 import userService from '../../service/userService'
 // import { Header, Item } from 'vue3-easy-data-table';
-import io from 'socket.io-client';
+import { socket } from "@/components/socket"
 
 const userServiceObj = new userService()
 export default {
@@ -38,23 +38,33 @@ export default {
     return {
       items: [],
       avatar: avatar,
-      CardList,
-      socket: io()
+      CardList
+     
     }
   },
+  methods :{ 
+    getUsers() { 
+      userServiceObj.getUser().then((result) => {
+        this.items = result.docs
+      })
+    }
+
+  },
   created () {
-    this.socket.on('userAdded',  function(data) {
-      console.log('userAdded',data)
-      alert("Hello")
-    })
+    
   },
   mounted() {
     // userServiceObj.getUser()
-    userServiceObj.getUser().then((result) => {
+    socket.timeout(5000).emit("userAddedSuccess", {}  , () => {
+      console.log(`User Successfully Created`);
+    });
+    socket.on('userAdded', (result) => {
       console.log(result)
-      this.items = result.docs
+      this.getUsers()
     })
+    this.getUsers()
     
+   // setInterval(() => this.socket.emit("userAdded",{name:"sad"}), 100)
     // const items = mockClientItems(10)
   },
   components: {
