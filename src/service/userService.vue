@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios'
-const baseUrl = 'http://localhost:3000/'
+const baseUrl = 'http://44.208.151.82:3000/'
 export default class userService {
   createUser(formData) {
     console.log(formData)
